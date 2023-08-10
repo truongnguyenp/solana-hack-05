@@ -12,13 +12,15 @@ import { TopupTxData } from '@elusiv/sdk';
 import { useWallet } from '@solana/wallet-adapter-react';
 import { LAMPORTS_PER_SOL } from '@solana/web3.js';
 import { AppContext } from '@/contexts/AppProvider';
+import CreatePost from './CreatePost';
 
-export default function Topup({
-  isTopUpModalVisible,
-  toggleTopUpModalVisible,
+export default function StakingNFT({
+  isAuditingRequestodalVisible,
+  toggleAuditingRequestodalVisible,
+  loading = false
 }: {
-  isTopUpModalVisible: boolean;
-  toggleTopUpModalVisible: () => void;
+  isAuditingRequestodalVisible: boolean;
+  toggleAuditingRequestodalVisible: () => void;
   setTransaction: (obj: any) => void;
 }) {
   return (
@@ -27,23 +29,20 @@ export default function Topup({
         isLoading={loading}
         leftIcon={<TopUpIcon />}
         colorScheme="purple"
-        onClick={toggleTopUpModalVisible}
+        onClick={() => {
+          toggleAuditingRequestodalVisible();
+        }}
         className="w-[200px]"
       >
-        Topup
+        Auditing request
       </Button>
       <Modal
-        loading={loading}
-        isOpen={isTopUpModalVisible}
-        actionLabel="Topup"
-        onClose={toggleTopUpModalVisible}
-        modalLabel="Topup to Elusiv"
+        isOpen={isAuditingRequestodalVisible}
+        onClose={toggleAuditingRequestodalVisible}
+        modalLabel="Auditing Requests"
         onSubmit={() => {}}
       >
-        <FormControl isRequired>
-          <FormLabel>Amount (SOL)</FormLabel>
-          <Input value={amount} onChange={handleInputChange}></Input>
-        </FormControl>
+        <CreatePost />
       </Modal>
     </div>
   );

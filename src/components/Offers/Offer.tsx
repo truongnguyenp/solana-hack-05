@@ -3,18 +3,18 @@ import React, { useState } from 'react';
 import Pic from './product/Pic';
 import TextOffer from './product/TextOffer';
 
-
 import Profile from './profile/Profile';
 import { useToggle } from 'usehooks-ts';
 import BorrowingRequest from '../BorrowingRequest';
 import ViewPrivateTransaction from '../ViewPrivateTransaction';
-
+import ViewToken from '../ViewToken';
 const Offer = ({ offer }: any) => {
   const [isBorrowingRequestodalVisible, toggleBorrowingRequestodalVisible] =
     useToggle();
 
   const [isViewTransactionModalVisible, toggleViewTransactionModalVisible] =
     useToggle();
+  const [isViewTokenModalVisible, toggleViewTokenModalVisible] = useToggle();
   return (
     <div className="frame">
       <Profile userImg={offer.userImg} userName={offer.userName} />
@@ -36,6 +36,11 @@ const Offer = ({ offer }: any) => {
           className="flex justify-center"
           isViewTransactionModalVisible={isViewTransactionModalVisible}
           toggleViewTransactionModalVisible={toggleViewTransactionModalVisible}
+        />
+        <ViewToken
+          isViewTokenModalVisible={isViewTokenModalVisible}
+          toggleViewTokenModalVisible={toggleViewTokenModalVisible}
+          loading={false}
         />
       </div>
     </div>

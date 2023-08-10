@@ -1,16 +1,16 @@
-import { getProfileAccount, getUserAccount } from "@/utils";
+import { getProfileAccount, getUserAccount } from '@/utils';
 import {
   useCreatePost,
   useGumContext,
   useSessionWallet,
   useUploaderContext,
-} from "@gumhq/react-sdk";
-import { GPLCORE_PROGRAMS } from "@gumhq/sdk";
-import { useWallet } from "@solana/wallet-adapter-react";
-import { PublicKey } from "@solana/web3.js";
-import { useEffect, useState } from "react";
-import { useRouter } from "next/router";
-
+} from '@gumhq/react-sdk';
+import { GPLCORE_PROGRAMS } from '@gumhq/sdk';
+import { useWallet } from '@solana/wallet-adapter-react';
+import { PublicKey } from '@solana/web3.js';
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
+import { useToast } from '@chakra-ui/react';
 export type Post = {
   content: {
     content: string;
@@ -26,6 +26,9 @@ export type Post = {
 };
 
 const CreatePost = () => {
+  const [nameCampaign, setNameCampaign] = useState('');
+  const [descriptionCampaign, setDescriptionCampaign] = useState('');
+  const [imageUrlCampaign, setImageUrlCampaign] = useState('');
   const { sdk } = useGumContext();
   const wallet = useWallet();
   const session = useSessionWallet();
@@ -40,8 +43,8 @@ const CreatePost = () => {
   const { create, createPostError } = useCreatePost(sdk);
   const [user, setUser] = useState<PublicKey | undefined>(undefined);
   const [profile, setProfile] = useState<PublicKey | undefined>(undefined);
-  const [posts, setPosts] = useState<Post[]>([]);
   const router = useRouter();
+  const toast = useToast();
 
   useEffect(() => {
     const setUp = async () => {
@@ -53,10 +56,10 @@ const CreatePost = () => {
           if (profileAccount) {
             setProfile(profileAccount);
           } else {
-            router.push("/createProfile");
+            router.push('/createProfile');
           }
         } else {
-          router.push("/createProfile");
+          router.push('/createProfile');
         }
       }
     };
@@ -65,7 +68,7 @@ const CreatePost = () => {
 
   const updateSession = async () => {
     if (!sessionToken) {
-      const targetProgramId = GPLCORE_PROGRAMS["devnet"];
+      const targetProgramId = GPLCORE_PROGRAMS['devnet'];
       const topUp = true; // this will transfer 0.01 SOL to the session wallet
       const sessionDuration = 60;
       return await createSession(targetProgramId, topUp, sessionDuration);
@@ -78,7 +81,14 @@ const CreatePost = () => {
     const session = await updateSession();
 
     if (!session) {
-      console.log("missing session");
+      console.log('missing session');
+      toast({
+        title: 'missing session',
+        description: 'missing session',
+        status: 'warning',
+        duration: 9000,
+        isClosable: true,
+      });
       return;
     }
     if (
@@ -90,34 +100,49 @@ const CreatePost = () => {
       !user
     ) {
       console.log(` profile: ${profile} user: ${user}`);
-      console.log("missing session or profile or user");
+      console.log('missing session or profile or user');
+      toast({
+        title: 'missing session or profile or user',
+        description: 'missing session or profile or user',
+        status: 'warning',
+        duration: 9000,
+        isClosable: true,
+      });
       return;
     }
 
     // sign the post with the session wallet
-    const postArray = new TextEncoder().encode(post);
-    const signature = await session.signMessage(postArray);
+    const nameCampaignArray = new TextEncoder().encode(nameCampaign);
+    const signature = await session.signMessage(nameCampaignArray);
     const signatureString = JSON.stringify(signature.toString());
 
-    // create the post metadata
-    const metadata = {
+    const campaignMetadata = {
       content: {
-        content: post,
-        format: "markdown",
+        nameCampaign,
+        descriptionCampaign,
+        imageUrlCampaign,
+        format: 'markdown',
       },
-      type: "text",
+      type: 'text',
       authorship: {
         publicKey: session.publicKey.toBase58(),
         signature: signatureString,
       },
-      metadataUri: "",
-      transactionUrl: "",
+      metadataUri: '',
+      transactionUrl: '',
     };
 
     // upload the post to arweave
-    const uploader = await handleUpload(metadata, session);
+    const uploader = await handleUpload(campaignMetadata, session);
     if (!uploader) {
-      console.log("error uploading post");
+      console.log('error uploading post');
+      toast({
+        title: 'Error Uploading Campaign Metadata',
+        description: 'Have something wrong when upload metadauri',
+        status: 'error',
+        duration: 9000,
+        isClosable: true,
+      });
       return;
     }
 
@@ -129,17 +154,30 @@ const CreatePost = () => {
       session.publicKey,
       new PublicKey(session.sessionToken),
       session.sendTransaction
-    );
+    ).catch((error) => console.log(error));
     if (!txRes) {
-      console.log("error creating post");
+      console.log('error creating post');
+      console.log(createPostError);
+      toast({
+        title: 'Create Campaign Error',
+        description: 'Have something wrong when create Campaign',
+        status: 'error',
+        duration: 9000,
+        isClosable: true,
+      });
       return;
     }
-    metadata.metadataUri = uploader.url;
-    metadata.transactionUrl = `https://solana.fm/tx/${txRes}?cluster=devnet-solana`;
-
-    setPosts((prevState) => [metadata, ...prevState]);
-
-    router.push("/");
+    toast({
+      title: 'Create Success Campaign',
+      description:
+        'Your Campaign is created now We will review your campaign :> ',
+      status: 'success',
+      duration: 9000,
+      isClosable: true,
+    });
+    setTimeout(() => {
+      router.push('/');
+    }, 3000);
   };
 
   return (
@@ -149,14 +187,14 @@ const CreatePost = () => {
           <form onSubmit={handleSubmit} className="flex flex-col items-center">
             <input
               type="text"
-              value={post}
+              value={'nft'}
               onChange={(e) => setPost(e.target.value)}
               placeholder="What's on your mind?"
               className="px-7 py-2 border-[1px] border-gray-500 rounded-lg w-full mb-4"
             />
             <input
               type="text"
-              value={post}
+              value={'nft'}
               onChange={(e) => setPost(e.target.value)}
               placeholder="Image"
               className="px-7 py-2 border-[1px] border-gray-500 rounded-lg w-full mb-4"

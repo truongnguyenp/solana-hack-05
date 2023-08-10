@@ -26,6 +26,8 @@ import { useToggle } from 'usehooks-ts';
 import AuditingRequest from './AuditingRequest';
 import { getUserRole } from '@/utils';
 import { ROLE } from '@/types';
+import StakingNFT from './StakingNFT';
+import { Router, useRouter} from 'next/router';
 
 const Links = ['NFTLoansX', 'Projects', 'Team'];
 
@@ -47,6 +49,7 @@ const NavLink = ({ children }: { children: ReactNode }) => (
 );
 
 export default function Header() {
+  const router = useRouter()
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { publicKey, signMessage } = useWallet();
   const toast = useToast();
@@ -106,15 +109,26 @@ export default function Header() {
               spacing={4}
               display={{ base: 'none', md: 'flex' }}
             >
-              {getUserRole() === ROLE.LENDER && (
+              {/* {getUserRole() === ROLE.LENDER && (
                 <AuditingRequest
                   isAuditingRequestodalVisible={isAuditingRequestodalVisible}
                   toggleAuditingRequestodalVisible={
                     toggleAuditingRequestodalVisible
                   }
                 />
-              )}
+              )} */}
+              <StakingNFT />
             </HStack>
+            <HStack>
+              <StakingNFT
+                isAuditingRequestodalVisible={isAuditingRequestodalVisible}
+                toggleAuditingRequestodalVisible={
+                  toggleAuditingRequestodalVisible
+                }
+              />
+            </HStack>
+        <Button  colorScheme='red' className="w-[120px]">Sell</Button>
+
           </HStack>
           <Flex alignItems={'center'}>
             <div className="mr-2">
@@ -147,7 +161,13 @@ export default function Header() {
                 />
               </MenuButton>
               <MenuList>
-                <MenuItem>Profile</MenuItem>
+                <MenuItem
+                  onClick={() => {
+                    router.push('/profile');
+                  }}
+                >
+                  Profile
+                </MenuItem>
                 <MenuItem>Settings</MenuItem>
                 <MenuDivider />
                 <MenuItem>Logout</MenuItem>
