@@ -1,19 +1,22 @@
-import React from "react";
-import HeaderOffer from "./HeaderOffer";
-import Info from "./Info";
-import Bet from "./Bet";
+import React from 'react';
+import HeaderOffer from './HeaderOffer';
+import Info from './Info';
+import Bet from './Bet';
 
-  const TextOffer =(props: any) => {
-    return (
-        <div className="text mt-[16px]">
-            <HeaderOffer content={props.title} />
-            <Info infoTitle="Collection: " infoContent={props.nftCollectionName} />
+const TextOffer = (props: any) => {
+  return (
+    <div className="text mt-[16px]">
+      <HeaderOffer content={props.title} />
+      <Info infoTitle="Collection: " infoContent={props.nftCollectionName} />
 
-            <Info infoTitle="Interest Rate: " infoContent={props.interestRate + "%"} />           
+      <Info
+        infoTitle="Grow Rate: "
+        infoContent={props.interestRate + '%'}
+      />
 
-            <Bet maximumLending={props.maximumLending} />
-            
-            {/* <div className="bet">
+      <Bet maximumLending={props.maximumLending} currency={props.currency} />
+
+      {/* <div className="bet">
                 <p className="info inline">{"Lendable Money: "}</p>
                 <div className="price mb-10px">    
                     <svg width="11" height="18" xmlns="http://www.w3.org/2000/svg"><path
@@ -22,11 +25,8 @@ import Bet from "./Bet";
                     <p>{props.maximumLending}</p>
                 </div>
             </div> */}
-
-            
-
-        </div>
-    );
-}
+    </div>
+  );
+};
 
 export default TextOffer;

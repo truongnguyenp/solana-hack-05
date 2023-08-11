@@ -8,6 +8,7 @@ import { useToggle } from 'usehooks-ts';
 import BorrowingRequest from '../BorrowingRequest';
 import ViewPrivateTransaction from '../ViewPrivateTransaction';
 import ViewToken from '../ViewToken';
+import { Button } from '@chakra-ui/react';
 const Offer = ({ offer }: any) => {
   const [isBorrowingRequestodalVisible, toggleBorrowingRequestodalVisible] =
     useToggle();
@@ -22,26 +23,36 @@ const Offer = ({ offer }: any) => {
       <TextOffer
         title={offer.title}
         nftCollectionName={offer.nftCollectionName}
+        currency={offer.currency}
         maximumLending={offer.maximumLending}
         interestRate={offer.interestRate}
       />
 
       <div className="flex flex-col gap-4">
-        <BorrowingRequest
+        {/* <BorrowingRequest
           className="flex justify-center"
           isBorrowingRequestodalVisible={isBorrowingRequestodalVisible}
           toggleBorrowingRequestodalVisible={toggleBorrowingRequestodalVisible}
-        />
-        <ViewPrivateTransaction
+        /> */}
+        {/* <ViewPrivateTransaction
           className="flex justify-center"
           isViewTransactionModalVisible={isViewTransactionModalVisible}
           toggleViewTransactionModalVisible={toggleViewTransactionModalVisible}
-        />
-        <ViewToken
-          isViewTokenModalVisible={isViewTokenModalVisible}
-          toggleViewTokenModalVisible={toggleViewTokenModalVisible}
-          loading={false}
-        />
+        /> */}
+        <div className="flex justify-center">
+
+        {!!offer.currency ? (
+          <ViewToken
+            isViewTokenModalVisible={isViewTokenModalVisible}
+            toggleViewTokenModalVisible={toggleViewTokenModalVisible}
+            loading={false}
+          />
+        ) : (
+          <Button colorScheme="whatsapp" className="w-[200px]">
+            Buy
+          </Button>
+        )}
+        </div>
       </div>
     </div>
   );

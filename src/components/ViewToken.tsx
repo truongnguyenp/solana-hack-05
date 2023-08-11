@@ -33,7 +33,7 @@ export default function ViewToken({
     <div className={className}>
       <Button
         leftIcon={<GlobalIcon />}
-        colorScheme="telegram"
+        colorScheme="purple"
         onClick={async () => {
           toggleViewTokenModalVisible();
         }}

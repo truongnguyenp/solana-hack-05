@@ -127,7 +127,7 @@ export default function Header() {
                 }
               />
             </HStack>
-        <Button  colorScheme='red' className="w-[120px]">Sell</Button>
+        <Button  colorScheme='red' className="w-[120px]">View token market</Button>
 
           </HStack>
           <Flex alignItems={'center'}>
