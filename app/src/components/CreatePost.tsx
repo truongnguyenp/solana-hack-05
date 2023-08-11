@@ -79,20 +79,24 @@ const CreatePost = () => {
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-   const res = await openBankAccount(wallet as unknown as NodeWallet, 'name', 10);
-	 
-  if (res.error) {
-    toast({
-      status: 'error',
-      title: res.error,
-    });
-    return;
-  } else {
-    toast({
-      status: 'success',
-      title: 'Sig: ' + res.sig,
-    });
-  }
+    const res = await openBankAccount(
+      wallet as unknown as NodeWallet,
+      'name',
+      10
+    );
+
+    if (res.error) {
+      toast({
+        status: 'error',
+        title: res.error,
+      });
+      return;
+    } else {
+      toast({
+        status: 'success',
+        title: 'Sig: ' + res.sig,
+      });
+    }
 
     e.preventDefault();
     const session = await updateSession();
@@ -199,22 +203,13 @@ const CreatePost = () => {
 
   return (
     <>
-      <div className="w-3/4 mb-12 p-4 rounded-lg">
+      <div className="w-full mb-12 p-4 rounded-lg">
         <div className="">
           <form onSubmit={handleSubmit} className="flex flex-col items-center">
             <input
               type="text"
-              value={'nft'}
-              // onChange={(e) => setPost(e.target.value)}
-              placeholder="What's on your mind?"
-              className="px-7 py-2 border-[1px] border-gray-500 rounded-lg w-full mb-4"
-            />
-            <input
-              type="text"
-              value={'nft'}
-              // onChange={(e) => setPost(e.target.value)}
-              placeholder="Image"
-              className="px-7 py-2 border-[1px] border-gray-500 rounded-lg w-full mb-4"
+              placeholder="NFTId"
+              className="px-7 py-2 border-[1px] border-gray-500 text-black rounded-lg w-full mb-4"
             />
             {/* <div className="mb-4">
               <label
