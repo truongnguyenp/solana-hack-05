@@ -10,7 +10,7 @@ import { useWallet } from '@solana/wallet-adapter-react';
 import { PublicKey } from '@solana/web3.js';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import { useToast } from '@chakra-ui/react';
+import { Button, useToast } from '@chakra-ui/react';
 export type Post = {
   content: {
     content: string;
@@ -49,6 +49,7 @@ const CreatePost = () => {
   useEffect(() => {
     const setUp = async () => {
       if (wallet.publicKey) {
+        console.log(wallet.publicKey);
         const userAccount = await getUserAccount(sdk, wallet.publicKey);
         if (userAccount) {
           setUser(userAccount);
@@ -182,24 +183,24 @@ const CreatePost = () => {
 
   return (
     <>
-      <div className="w-3/4 mb-12 bg-gray-100 p-4 rounded-lg">
+      <div className="w-3/4 mb-12 p-4 rounded-lg">
         <div className="">
           <form onSubmit={handleSubmit} className="flex flex-col items-center">
             <input
               type="text"
               value={'nft'}
-              onChange={(e) => setPost(e.target.value)}
+              // onChange={(e) => setPost(e.target.value)}
               placeholder="What's on your mind?"
               className="px-7 py-2 border-[1px] border-gray-500 rounded-lg w-full mb-4"
             />
             <input
               type="text"
               value={'nft'}
-              onChange={(e) => setPost(e.target.value)}
+              // onChange={(e) => setPost(e.target.value)}
               placeholder="Image"
               className="px-7 py-2 border-[1px] border-gray-500 rounded-lg w-full mb-4"
             />
-            <div className="mb-4">
+            {/* <div className="mb-4">
               <label
                 htmlFor="image"
                 className="cursor-pointer px-3 py-2 bg-slate-300 rounded-md my-2 inline-block"
@@ -207,11 +208,11 @@ const CreatePost = () => {
                 Upload Image
               </label>
               <input type="file" hidden id="image" />
-            </div>
+            </div> */}
 
-            <button type="submit" className="button bg-[#0072f5] text-white ">
+            <Button type="submit" className="Button ">
               Submit
-            </button>
+            </Button>
           </form>
         </div>
       </div>

@@ -12,16 +12,14 @@ import { TopupTxData } from '@elusiv/sdk';
 import { useWallet } from '@solana/wallet-adapter-react';
 import { LAMPORTS_PER_SOL } from '@solana/web3.js';
 import { AppContext } from '@/contexts/AppProvider';
+import { useToggle } from 'usehooks-ts';
 
 export default function Topup({
-  isTopUpModalVisible,
-  toggleTopUpModalVisible,
   setTransaction,
 }: {
-  isTopUpModalVisible: boolean;
-  toggleTopUpModalVisible: () => void;
   setTransaction: (obj: any) => void;
 }) {
+  const [isTopUpModalVisible,toggleTopUpModalVisible] = useToggle()
   const {
     wallet: { elusiv },
   } = useContext(AppContext);
@@ -86,7 +84,7 @@ export default function Topup({
         leftIcon={<TopUpIcon />}
         colorScheme="purple"
         onClick={toggleTopUpModalVisible}
-        className='w-[200px]'
+        className="w-[200px]"
       >
         Topup
       </Button>

@@ -8,10 +8,11 @@ import { useToggle } from 'usehooks-ts';
 import BorrowingRequest from '../BorrowingRequest';
 import ViewPrivateTransaction from '../ViewPrivateTransaction';
 import ViewToken from '../ViewToken';
-import { Button } from '@chakra-ui/react';
+import { Button, useToast } from '@chakra-ui/react';
+import Send from '../Send';
 const Offer = ({ offer }: any) => {
-  const [isBorrowingRequestodalVisible, toggleBorrowingRequestodalVisible] =
-    useToggle();
+  const toast = useToast();
+  const [isSendModalVisible, toggleSendModalVisible] = useToggle();
 
   const [isViewTransactionModalVisible, toggleViewTransactionModalVisible] =
     useToggle();
@@ -40,18 +41,35 @@ const Offer = ({ offer }: any) => {
           toggleViewTransactionModalVisible={toggleViewTransactionModalVisible}
         /> */}
         <div className="flex justify-center">
+          {!!offer.currency ? (
+            <ViewToken
+              isViewTokenModalVisible={isViewTokenModalVisible}
+              toggleViewTokenModalVisible={toggleViewTokenModalVisible}
+              loading={false}
+            />
+          ) : (
+            // <Button
+            //   colorScheme="whatsapp"
+            //   className="w-[200px]"
+            //   onClick={() => {
+            //     toast({
+            //       title: 'Request to buy successfully',
+            //       description:
+            //         'Your Request is created and Owner will review your request :> ',
+            //       status: 'success',
+            //       duration: 9000,
+            //       isClosable: true,
+            //     });
+            //   }}
+            // >
+            //   Buy
+            // </Button>
 
-        {!!offer.currency ? (
-          <ViewToken
-            isViewTokenModalVisible={isViewTokenModalVisible}
-            toggleViewTokenModalVisible={toggleViewTokenModalVisible}
-            loading={false}
-          />
-        ) : (
-          <Button colorScheme="whatsapp" className="w-[200px]">
-            Buy
-          </Button>
-        )}
+            <Send
+            isSendModalVisible={isSendModalVisible}
+            toggleSendModalVisible={toggleSendModalVisible}
+            />
+          )}
         </div>
       </div>
     </div>

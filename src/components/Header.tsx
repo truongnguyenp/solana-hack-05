@@ -27,7 +27,8 @@ import AuditingRequest from './AuditingRequest';
 import { getUserRole } from '@/utils';
 import { ROLE } from '@/types';
 import StakingNFT from './StakingNFT';
-import { Router, useRouter} from 'next/router';
+import { Router, useRouter } from 'next/router';
+import Topup from './Topup';
 
 const Links = ['NFTLoansX', 'Projects', 'Team'];
 
@@ -49,7 +50,7 @@ const NavLink = ({ children }: { children: ReactNode }) => (
 );
 
 export default function Header() {
-  const router = useRouter()
+  const router = useRouter();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { publicKey, signMessage } = useWallet();
   const toast = useToast();
@@ -127,8 +128,7 @@ export default function Header() {
                 }
               />
             </HStack>
-        <Button  colorScheme='red' className="w-[120px]">View token market</Button>
-
+            <Topup />
           </HStack>
           <Flex alignItems={'center'}>
             <div className="mr-2">

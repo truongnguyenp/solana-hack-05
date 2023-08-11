@@ -17,7 +17,7 @@ import CreatePost from './CreatePost';
 export default function StakingNFT({
   isAuditingRequestodalVisible,
   toggleAuditingRequestodalVisible,
-  loading = false
+  loading = false,
 }: {
   isAuditingRequestodalVisible: boolean;
   toggleAuditingRequestodalVisible: () => void;
@@ -34,7 +34,7 @@ export default function StakingNFT({
         }}
         className="w-[200px]"
       >
-        Auditing request
+        Staking NFT
       </Button>
       <Modal
         isOpen={isAuditingRequestodalVisible}

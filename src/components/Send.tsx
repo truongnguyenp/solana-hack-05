@@ -68,7 +68,7 @@ export default function Send({ totalBalance, isSendModalVisible, toggleSendModal
                 isLoading={isLoading}
                 className='w-[200px]'
             >
-                send
+                Buy
             </Button>
             <Modal
                 isOpen={isSendModalVisible}

@@ -10,7 +10,7 @@ export const OFFERS = [
   {
     "currency": "pzSOL",
     "id": 1,
-    "title": "Lending offer for PanzerdogNFTs",
+    "title": "NFT Tokens for PanzerdogNFTs",
     // "description:" "I can let you rentmy NFT for 1 day",
     "nftCollectionName": "Panzerdogcollection",
     "nftCollectionImg": "https://prod-image-cdn.tensor.trade/images/400x400/freeze=false/https://bafybeicxswb4nvoprcgm32qtglqrrdea32hndchwhggtjvqz7azza33kea.ipfs.nftstorage.link/",
@@ -21,7 +21,7 @@ export const OFFERS = [
   },
   {
     "id": 2,
-    "title": "Lending offer for Famous Fox Federation NFTs",
+    "title": "Famous Fox Federation NFTs",
     // "description:" "I can let you rentmy NFT for 1 day",
     "nftCollectionName": "Famous Fox Federation collection",
     "nftCollectionImg": "https://img-cdn.magiceden.dev/rs:fill:400:400:0:0/plain/https://creator-hub-prod.s3.us-east-2.amazonaws.com/famous_fox_federation_pfp_1679672949828.gif",
@@ -34,7 +34,7 @@ export const OFFERS = [
   {
     "currency": "bSOL",
     "id": 3,
-    "title": "Lending offer for Bonks NFTs",
+    "title": "NFT Tokens for Bonks NFTs",
     // "description:" "I can let you rentmy NFT for 1 day",
     "nftCollectionName": "Bonks collection",
     "nftCollectionImg": "https://prod-image-cdn.tensor.trade/images/400x400/freeze=false/https://creator-hub-prod.s3.us-east-2.amazonaws.com/bonkznft_pfp_1675111749066.png",
