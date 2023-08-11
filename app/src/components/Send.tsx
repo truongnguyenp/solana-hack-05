@@ -24,7 +24,7 @@ export default function Send({ totalBalance, isSendModalVisible, toggleSendModal
     const { wallet: {elusiv} } = useContext(AppContext);
 
     const handleSendPrivateBalance = async (pubKey: string, amount: number) => {
-        if (!elusiv || !publicKey || !totalBalance) {
+        if (!elusiv || !publicKey ) {
             toast({
                 title: "Can not process when you not have accept Elusiv Transfer",
                 status: "warning",
@@ -35,16 +35,16 @@ export default function Send({ totalBalance, isSendModalVisible, toggleSendModal
             return;
         };
 
-        if (new BigNumber(totalBalance.toString()).isLessThan(amount)) {
-            toast({
-                title: "Not enough balance in Elusiv",
-                description: "The amount you send is more than total balance you have in Elusiv",
-                status: "warning",
-                duration: 9000,
-                isClosable: true,
-                position: "top-right"
-            })
-        }
+        // if (new BigNumber(totalBalance.toString()).isLessThan(amount)) {
+        //     toast({
+        //         title: "Not enough balance in Elusiv",
+        //         description: "The amount you send is more than total balance you have in Elusiv",
+        //         status: "warning",
+        //         duration: 9000,
+        //         isClosable: true,
+        //         position: "top-right"
+        //     })
+        // }
         setIsLoading(true);
         const sendTx = await elusiv!.buildSendTx(LAMPORTS_PER_SOL * amount, new PublicKey(pubKey), "LAMPORTS");
         await elusiv!.sendElusivTx(sendTx);
@@ -55,7 +55,7 @@ export default function Send({ totalBalance, isSendModalVisible, toggleSendModal
             isClosable: true,
             position: "top-right"
         });
-        setTransaction(sendTx);
+        // setTransaction(sendTx);
         setIsLoading(false);
     }
 
